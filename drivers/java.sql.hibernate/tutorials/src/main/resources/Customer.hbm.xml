@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="Customer" table="custmast">
+    <id name="number" column="cm_custnumb" type="string"> 
+      <generator class="assigned"/> 
+    </id> 
+    <property name="zipCode" column="cm_custzipc" type="string"/> 
+    <property name="state" column="cm_custstat" type="string"/> 
+    <property name="rating" column="cm_custrtng" type="string"/> 
+    <property name="name" column="cm_custname" type="string"/> 
+    <property name="address" column="cm_custaddr" type="string"/> 
+    <property name="city" column="cm_custcity" type="string"/> 
+  </class> 
+</hibernate-mapping>

@@ -1,0 +1,57 @@
+// $Id: config.w32,v 1.2 2005/06/05 19:25:00 wez Exp $
+// vim:ft=javascript
+
+ARG_WITH("ctsql", "ctreeSQL support", "no");
+
+// PHP_CTSQL should be ctreeSDK\ctreeAPI
+
+if (PHP_CTSQL != "no") {
+//Check Trunk Directory Structure
+	if (CHECK_LIB("libctesql.lib", "ctsql", PHP_CTSQL + "\\lib.pql") &&
+		CHECK_HEADER_ADD_INCLUDE("sql_lib.h", "CFLAGS_CTSQL", PHP_CTSQL + "\\ctree\\include") &&
+		CHECK_HEADER_ADD_INCLUDE("os_dhtp.hxx", "CFLAGS_CTSQL", PHP_CTSQL + "\\ctree\\sql\\src\\public\\os\\windows"))
+	{
+		EXTENSION("ctsql", "ctsql.c");
+		AC_DEFINE('HAVE_CTREESQL', 1, 'Have ctreeSQL library');
+	} else {
+//Check Pro-Express Directory Structure
+		if (CHECK_LIB("libctesql.lib", "ctsql", PHP_CTSQL + "\\lib\\sql.odbc\\Microsoft Visual Studio 2012") &&
+			CHECK_LIB("ctlibeay32.lib", "ctsql", PHP_CTSQL + "\\sdk\\php.sql\\src") &&
+			CHECK_LIB("ctssleay32.lib", "ctsql", PHP_CTSQL + "\\sdk\\php.sql\\src") &&
+			CHECK_LIB("Gdi32.lib", "ctsql", "") &&
+			CHECK_HEADER_ADD_INCLUDE("sql_lib.h", "CFLAGS_CTSQL", PHP_CTSQL + "\\include\\sdk\\sql.embedded") &&
+			CHECK_HEADER_ADD_INCLUDE("dh_custom.h", "CFLAGS_CTSQL", PHP_CTSQL + "\\include"))
+		{
+			EXTENSION("ctsql", "ctsql.c");
+			AC_DEFINE('HAVE_CTREESQL', 1, 'Have ctreeSQL library');
+		} else {
+//Check RTG Directory Structure
+			if (CHECK_LIB("libctesql.lib", "ctsql",  PHP_CTSQL + "\\drivers\\php.sql\\src\\sql.embedded\\lib") &&
+				CHECK_LIB("ctlibeay32.lib", "ctsql",  PHP_CTSQL + "\\drivers\\php.sql\\src\\sql.embedded\\lib") &&
+				CHECK_LIB("ctssleay32.lib", "ctsql",  PHP_CTSQL + "\\drivers\\php.sql\\src\\sql.embedded\\lib") &&
+				CHECK_LIB("Gdi32.lib", "ctsql", "") &&
+				CHECK_HEADER_ADD_INCLUDE("sql_lib.h", "CFLAGS_CTSQL", PHP_CTSQL + "\\drivers\\php.sql\\src\\sql.embedded\\include"))
+			{
+				EXTENSION("ctsql", "ctsql.c");
+				AC_DEFINE('HAVE_CTREESQL', 1, 'Have ctreeSQL library');
+			} else {
+//Check Current Directory
+			if (CHECK_LIB("libctesql.lib", "ctsql", "sql.embedded\\lib") &&
+				CHECK_HEADER_ADD_INCLUDE("sql_lib.h", "CFLAGS_CTSQL", "sql.embedded\\include"))
+			{
+				EXTENSION("ctsql", "ctsql.c");
+				AC_DEFINE('HAVE_CTREESQL', 1, 'Have ctreeSQL library');
+			} else {
+				WARNING("ctreesql not enabled; libraries and headers not found");
+			}
+		}
+	}
+	}
+
+	ADD_FLAG("LDFLAGS_CTSQL", "/nodefaultlib:libcmt");
+
+	if (X64) {
+	// 64 bit compilation
+		ADD_FLAG('CFLAGS_CTSQL','/D DH_64BIT_MODEL');
+	} 
+}

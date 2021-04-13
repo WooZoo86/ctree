@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectTypeGuids>{6822593F-2571-4FE7-B944-07B12D692359};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{4B59D573-2A96-436D-958B-BA9A5F7F109A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Tutorials</RootNamespace>
+    <AssemblyName>Tutorials</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Ctree.SqlSP">
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Extensions\dvszwxwx.5m2\Ctree.SqlSP.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Stored_Procedures\tutorial_1.cs" />
+    <Compile Include="Stored_Procedures\tutorial_2.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Triggers\" />
+    <Folder Include="UDFs\" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{6822593F-2571-4FE7-B944-07B12D692359}" Configuration="Debug|Any CPU">
+        <CtreeProjectFlavorCfg>
+          <DataSource>Custom</DataSource>
+          <ServerHost>localhost</ServerHost>
+          <ServerPort>6597</ServerPort>
+          <Database>ctreeSQL</Database>
+          <User>admin</User>
+          <Pass>ADMIN</Pass>
+          <CanUpdate>True</CanUpdate>
+          <Transport>Default</Transport>
+          <DebugPort>4015</DebugPort>
+          <DebugUser>
+          </DebugUser>
+          <DebugPass>
+          </DebugPass>
+          <DeploySource>true</DeploySource>
+          <DeployPDB>true</DeployPDB>
+        </CtreeProjectFlavorCfg>
+      </FlavorProperties>
+      <FlavorProperties GUID="{6822593F-2571-4FE7-B944-07B12D692359}" Configuration="Release|Any CPU">
+        <CtreeProjectFlavorCfg>
+          <DataSource>Custom</DataSource>
+          <ServerHost>localhost</ServerHost>
+          <ServerPort>6597</ServerPort>
+          <Database>ctreeSQL</Database>
+          <User>admin</User>
+          <Pass>ADMIN</Pass>
+          <CanUpdate>True</CanUpdate>
+          <Transport>Default</Transport>
+          <DebugPort>4015</DebugPort>
+          <DebugUser>
+          </DebugUser>
+          <DebugPass>
+          </DebugPass>
+          <DeploySource>false</DeploySource>
+          <DeployPDB>false</DeployPDB>
+        </CtreeProjectFlavorCfg>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

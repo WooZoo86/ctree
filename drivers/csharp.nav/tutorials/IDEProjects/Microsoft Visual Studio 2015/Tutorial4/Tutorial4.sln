@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tutorial4", "Tutorial4.csproj", "{A7C6F6D3-69B5-4811-B470-718124E5D859}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A7C6F6D3-69B5-4811-B470-718124E5D859}.Debug|x64.ActiveCfg = Debug|x64
+		{A7C6F6D3-69B5-4811-B470-718124E5D859}.Debug|x64.Build.0 = Debug|x64
+		{A7C6F6D3-69B5-4811-B470-718124E5D859}.Release|x64.ActiveCfg = Release|x64
+		{A7C6F6D3-69B5-4811-B470-718124E5D859}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

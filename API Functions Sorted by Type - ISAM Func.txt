@@ -1,0 +1,270 @@
+API Functions Sorted by Type - ISAM Functions
+The list below groups the ISAM functions according to the type of function.
+
+General ISAM Functions
+
+InitISAM - Initialize file structures and index buffer area.
+
+InitISAMXtd - Initialize file structures and index buffer area (extended version).
+
+LockISAM - Enable, free or suspend data record locks.
+
+ReadIsamData - ISAM read data at record position.
+
+ReadIsamVData - ISAM read variable-length data at record position.
+
+TransformXtdSegment - Creates a binary sort key (segment) using an extended key segment definition.
+
+Batch Operations
+
+AllocateBatch - Allocates buffer space for multiple batches
+
+ChangeBatch - Change current batch
+
+DoBatch - Perform operations on a group of records.
+
+DoBatchXtd - Perform operations on a group of records (extended version).
+
+FreeBatch - Free space allocated for multiple batches (groups of records).
+
+Context Functions
+
+ChangeISAMContext - Change current ISAM context
+
+CloseISAMContext - Close current ISAM context
+
+OpenISAMContext - Opens (creates) an ISAM context.
+
+File Functions
+
+CloseCtFileByName - Close a memory file and remove it from memory
+
+CloseISAM - Close all ISAM files
+
+CurrentFileOffset - Returns the byte position, (file address or offset), of the current ISAM record for the specified file.
+
+CompactIFile - Compresses a data file then rebuilds to regenerate the indexes
+
+CompactIFileXtd - Compresses a data file, then rebuilds to regenerate the indexes.
+
+CompactIFileXtd8 - Compresses a data file, then rebuilds to regenerate the indexes.
+
+CreateISAM - Create all the ISAM files.
+
+CreateISAMXtd - Extended ISAM file creation routine.
+
+DeleteRFile - Delete ISAM file and associated indexes.
+
+OpenISAM - Open all the ISAM files.
+
+OpenISAMXtd - Open all the ISAM files (extended version).
+
+History Functions
+
+ChangeHistory - Change current history buffer
+
+FreeHistory - Free space allocated for multiple history buffers.
+
+IFile Functions
+
+CloseIFile - Incremental ISAM close
+
+CloseRFile - Incremental ISAM close for files opened by Resource IFIL open
+
+CreateIFile - Incremental ISAM create.
+
+CreateIFileXtd - Extended incremental ISAM creation.
+
+CreateIFileXtd8 (CreateIFileXtd8, CreateIFileXtd8) - Extended 8-byte incremental ISAM creation.
+
+DeleteIFile - Delete ISAM file and associated indexes.
+
+GetIFile - Retrieve an IFIL structure from a data file
+
+OpenIFile - Incremental ISAM open.
+
+OpenFileWithResource - Incremental ISAM open, based on the IFIL Resource.
+
+OpenFileWithResourceXtd - Incremental ISAM open, based on the IFIL Resource (extended).
+
+OpenIFileXtd - Extended Incremental ISAM open.
+
+PutIFile - Place an IFIL structure into a data file resource record.
+
+PutIFileXtd - Place an IFIL structure into a data file resource record. (Extended version)
+
+PutIFileXtd8 - Put an IFIL structure into a data file resource record. Extended 8-byte version.
+
+RebuildIFile - Incremental ISAM rebuild.
+
+RebuildIFileXtd - Extended Incremental ISAM rebuild.
+
+RebuildIFileXtd8 - Extended 8-byte Incremental ISAM rebuild.
+
+RenameIFile - Atomically rename some or all of the files associated with the IFIL structure.
+
+RenameIFileXtd - Rename ISAM files, extended version.
+
+Index Functions
+
+DropIndex - Permanent Incremental Index deletion.
+
+GetConditionalIndex - Get the conditional index resource from a data file.
+
+PermIIndex - Permanent Incremental Index creation.
+
+PermIIndex8 - Permanent 8-byte Incremental Index creation.
+
+RebuildIIndex - Rebuilds a single index.
+
+TempIIndexXtd - Temporary Incremental Index creation.
+
+TempIIndexXtd8 - Extended 8-byte temporary Incremental Index creation.
+
+UpdateConditionalIndex - Update the Conditional Index Resource in a data file.
+
+Key Functions
+
+CurrentISAMKey - Create an ISAM key from the current ISAM record.
+
+GetXtdKeySegmentDef (GetXtdKeySegmentDef, GetXtdKeySegmentDef) - ISAM data definition: Retrieves the requested extended key segment definition.
+
+PutXtdKeySegmentDef (PutXtdKeySegmentDef, PutXtdKeySegmentDef) - Defines an extended key segment for a Server, an application, a data file, an index file, or a particular index segment.
+
+TransformKey - Transforms an assembled key value according to the ISAM key segment mode
+
+uTFRMKEY - Undo key segment translation to target key.
+
+Notifications
+
+ctCallback - Establish a notification callback.
+
+ctNotify - Send notification messages to a queue.
+
+Queue Management
+
+ctSysQueueClose - Closes an existing queue.
+
+ctSysQueueLIFOWrite - Add new data at the beginning of a queue.
+
+ctSysQueueMlen - Retrieves the length of the next available message in the queue.
+
+ctSysQueueOpen (ctSysQueueOpen, ctSysQueueOpen) - Open or create a new queue.
+
+ctSysQueueRead - Read data from the queue.
+
+ctSysQueueWrite - Add new data at the end of a queue.
+
+Range Functions
+
+AllocateRange - Establishes index range for ISAM record retrieval
+
+EstimateRange - Find the approximate number of entries between two key values.
+
+FirstInRange - Read the first data record in a range
+
+FirstInVRange - Read the first data record in a range
+
+FreeRange - Reset and free allocated buffers for range operation
+
+LastInRange - Read the last data record in a range
+
+LastInVRange - Read the last data record in a range
+
+NextInRange - Read the next data record in a range
+
+NextInVRange - Read the next data record in a range
+
+PreviousInRange - Read the previous record in a range
+
+PreviousInVRange - Read the previous record in a range
+
+Records
+
+AddRecord - Fixed-length record add
+
+AddVRecord - Variable-length record add
+
+BlockingISAMRead - Blocking record read
+
+DeleteRecord - Delete current fixed-length ISAM record.
+
+DeleteVRecord - Delete current variable-length ISAM record.
+
+FirstRecord - Read the first data record.
+
+FirstVRecord - Read the first variable-length data record.
+
+GetGTERecord - Read the record with key greater than or equal to target.
+
+GetGTEVRecord - Read the variable-length record with key greater than or equal to target.
+
+GetGTRecord - Read the record with key greater than target.
+
+GetGTVRecord - Read the variable-length record with key greater than target.
+
+GetLTERecord - Read the record with key less than or equal to target.
+
+GetLTEVRecord - Read the variable-length record with key less than or equal to target.
+
+GetLTRecord - Read the record with key less than target.
+
+GetLTVRecord - Read the variable-length record with a key less than target.
+
+GetRecord - Get data record with key equal to target value.
+
+GetVRecord - Read the variable-length record with a key equal to target.
+
+LastRecord - Read the last data record.
+
+LastVRecord - Read the last variable-length data record.
+
+NextRecord - Read the next data record.
+
+NextVRecord - Read the next variable-length data record in the data file.
+
+PreviousRecord - Read the preceding data record.
+
+PreviousVRecord - Read the previous variable-length data record in the data file.
+
+ReReadRecord - Reread current ISAM record.
+
+ReReadVRecord - Reread variable-length ISAM data record.
+
+ResetRecord - Updates the current ISAM record image buffers.
+
+ReWriteRecord - Rewrite current fixed-length ISAM record.
+
+ReWriteVRecord - Rewrite current variable-length ISAM record.
+
+SetRecord - Resets the current ISAM record.
+
+VRecordLength - Get length of current variable-length ISAM record.
+
+Sets
+
+AllocateSet - Allocates buffer space for multiple sets
+
+ChangeSet - Change current set
+
+FirstInSet - Read the first data record in the set defined by target.
+
+FirstInVSet - Read the first variable-length data record in the set defined by target.
+
+FreeSet - Free space allocated for multiple sets.
+
+LastInSet - Read the last data record in the set defined by a target.
+
+LastInVSet - Read the last variable-length data record in the set defined by target.
+
+NextInSet - Read the next data record in the set defined by target.
+
+NextInVSet - Read the next variable-length data record in the set defined by target.
+
+PositionSet - Establish current ISAM record as current position in set.
+
+PositionVSet - Establish current variable-length ISAM record as current position in set.
+
+PreviousInSet - Read the previous data record in the current key value set.
+
+PreviousInVSet - Read the previous variable-length data record in the set defined by target.

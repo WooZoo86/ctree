@@ -1,0 +1,4 @@
+/*
+This dummy header file signals to mtmake that we support building json-c on this
+platform. See config.h for the actual header file that we include for this platform.
+*/

@@ -1,0 +1,11 @@
+{
+  "name": "ctdbsdk",
+  "version": "1.0.0",
+  "description": "Enable the use of the mtclient shared library from JavaScript",
+  "main": "ctdbsdk.js",
+  "license": "ISC",
+  "dependencies": {
+    "ffi-napi": "*",
+    "ref-napi": "*"
+  }
+}

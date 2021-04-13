@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+repositories {
+    // Use jcenter for resolving dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    implementation 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.6.1'
+    implementation 'javax.resource:javax.resource-api:1.7.1'
+    implementation files('../FairComCtreeDB.jar')
+	implementation files('../FairComCtreeDB_JPA.jar')
+}
+
+application {
+    mainClassName = 'Main'
+}
+
+run {
+    systemProperty "java.library.path", ".."
+}

@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+run {
+	standardInput = System.in
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation files('../ctreeACEDialect.jar')
+	implementation files('../../sql.jdbc/ctreeJDBC.jar')
+	implementation 'org.hibernate:hibernate-core:5.4.12.Final'
+}
+
+application {
+    mainClassName = 'Main'
+}

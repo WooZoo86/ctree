@@ -1,0 +1,14 @@
+{
+  "name": "ctsql",
+  "version": "1.0.0",
+  "description": "Enable the easy use of the ctsqlapi shared library from JavaScript",
+  "license": "ISC",
+  "main": "ctsql.js",
+  "dependencies": {
+    "ffi-napi": "*",
+    "iconv-lite": "*",
+    "ref-napi": "*",
+    "ref-struct-napi": "*",
+    "ref-array-napi": "*"
+  }
+}

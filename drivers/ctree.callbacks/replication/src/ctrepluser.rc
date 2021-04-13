@@ -1,0 +1,33 @@
+// ctSIBLING_PRODUCT_NAME: Product Name References //
+
+#include <windows.h>
+#include <ntverp.h>
+#ifndef __CTVERS_H__
+#include "ctvers.h"
+#endif
+
+FAIRCOM_APP_ICON             ICON    DISCARDABLE     "fcapp.ico"
+
+#undef  VER_PRODUCTNAME_STR
+#undef  VER_PRODUCTVERSION
+#undef  VER_PRODUCTVERSION_STR
+#undef  VER_COMPANYNAME_STR
+
+#define VER_FILETYPE                VFT_DRV
+#define VER_FILESUBTYPE             VFT2_DRV_SYSTEM
+
+#define VER_COMPANYNAME_STR		"FairCom Corporation"
+#define VER_FILEDESCRIPTION_STR     	"FairCom DB ctrepluser Module"
+#define VER_INTERNALNAME_STR        	"ctrepluser"
+#define VER_LEGALCOPYRIGHT_YEARS    	ctPRODUCT_COPYRIGHT_YEARS_STR
+#define VER_LEGALCOPYRIGHT_STR 		"Copyright (C) FairCom Corp." VER_LEGALCOPYRIGHT_YEARS
+#define VER_PRODUCTNAME_STR 		"FairCom DB Database"
+#define VER_PRODUCTVERSION               ctVER_MAJOR , ctVER_MINOR , ctVER_MINI , ctVER_REVSN
+#define VER_FILEVERSION                  ctVER_MAJOR , ctVER_MINOR , ctVER_MINI , ctVER_REVSN
+#define VER_PRODUCTVERSION_STR 		ctPRODUCT_VERSION_STR
+#define VER_FILEVERSION_STR 		VER_PRODUCTVERSION_STR
+#define VER_ORIGINALFILENAME_STR 	VER_INTERNALNAME_STR
+
+
+#define VER_LANGNEUTRAL
+#include "common.ver"

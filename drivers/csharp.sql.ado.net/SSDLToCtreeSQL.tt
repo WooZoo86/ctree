@@ -1,0 +1,205 @@
+<# 
+//---------------------------------------------------------------------
+// <copyright file="SsdlToCtreeSql.tt" company="FairCom">
+//      Copyright (c) FairCom Corporation.  All rights reserved.
+// </copyright>
+//---------------------------------------------------------------------
+// This T4 template generates CtreeSQL from an instance of 
+// System.Data.Metadata.Edm.StoreItemCollection, an object representation
+// of the SSDL. This CtreeSQL is compatible with ctreeACE V10 and higher.
+//---------------------------------------------------------------------
+// Note: We will resolve all paths in assembly directives at runtime, taking 
+// macros into account (e.g. $(DevEnvDir), $(ProjectDir), etc.)
+#>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="%VS140COMNTOOLS%..\IDE\Microsoft.Data.Entity.Design.DatabaseGeneration.dll"#>
+<#@ assembly name="%VS140COMNTOOLS%..\IDE\EntityFramework.dll"#>
+<#@ assembly name="%VS140COMNTOOLS%..\IDE\EntityFramework.SqlServer.dll" #>
+<#@ assembly name="%VS140COMNTOOLS%..\IDE\EntityFramework.SqlServerCompact.dll" #>
+<#@ assembly name="%FAIRCOMTOOLS%\Ctree.Data.SqlClient.dll" #>
+<#@ assembly name="%FAIRCOMTOOLS%\Ctree.Data.EntityFramework.dll" #>
+<#@ assembly name="EnvDTE" #>
+<#@ assembly name="System.Configuration.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Data.Entity" #>
+<#@ import namespace="System.Data.Entity.Core.Metadata.Edm" #>
+<#@ import namespace="Microsoft.Data.Entity.Design.DatabaseGeneration" #>
+<#@ import namespace="System.Runtime.Remoting.Messaging" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="Ctree.Data.SqlClient" #>
+<#@ import namespace="System.Configuration" #>
+<#@ import namespace="Ctree.Data.EntityFramework" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ template language="C#" debug="true" hostspecific="true" #>
+<#
+    //DbConfiguration.SetConfiguration(new CtreeSqlEFConfiguration());
+#>
+<#@ include file="GenerateCtreeSQL.Utility.ttinclude"#>
+<#@ include file="GenerateTSQL.Utility.ttinclude"#>
+<#@ output extension = ".sql" #>
+<#
+// +++++++++++++++++++++++++++++++++++++++++++++++++
+// Setup for the template (initializing variables, etc.)
+// +++++++++++++++++++++++++++++++++++++++++++++++++
+
+    CtreeSqlScriptServices service = new CtreeSqlScriptServices();
+	// if databaseName is always empty no DROP and CREATE statement are generated.
+    string databaseName = ""; //this.GetInput<string>(EdmParameterBag.ParameterName.DatabaseName.ToString());
+    string edmxPath = this.GetInput<string>(EdmParameterBag.ParameterName.EdmxPath.ToString());    
+    Version targetVersion = this.GetInput<Version>(EdmParameterBag.ParameterName.TargetVersion.ToString());
+    
+    if (false == InitializeAndValidateFcSQLExistingStore()) 
+    {
+#>
+-- Warning: There were errors validating the existing SSDL. Drop statements
+-- will not be generated.
+<#
+    }
+#>
+-- -----------------------------------------------------------
+-- Entity Designer DDL Script for ctreeACE Server V10 and higher
+-- -----------------------------------------------------------
+-- Date Created: <#=DateTime.Now#>
+<#
+    if (!String.IsNullOrEmpty(edmxPath))
+    {
+#>
+-- Generated from EDMX file: <#=MyId(edmxPath)#>
+-- Target version: <#=MyId(targetVersion.ToString())#>
+<#
+    }
+#>
+-- --------------------------------------------------
+
+<# 
+ if (!String.IsNullOrEmpty(databaseName))
+    {
+#>
+DROP DATABASE IF EXISTS `<#=MyId(databaseName)#>`;
+CREATE DATABASE `<#=MyId(databaseName)#>`;
+USE `<#=MyId(databaseName)#>`;
+<#
+    }
+#>
+
+-- --------------------------------------------------
+-- Dropping existing FOREIGN KEY constraints
+-- --------------------------------------------------
+
+<#
+    foreach (AssociationSet associationSet in FcSQLExistingStore.GetAllAssociationSets())
+    {
+        ReferentialConstraint constraint = associationSet.ElementType.ReferentialConstraints.Single();
+        string constraintName = MyId(WriteFcFKConstraintName(constraint));
+        AssociationSetEnd dependentSetEnd = associationSet.AssociationSetEnds.Where(ase => ase.CorrespondingAssociationEndMember == constraint.ToRole).Single();
+        string dependentTableName = MyId(dependentSetEnd.EntitySet.GetTableName());
+		string dependentTableUser =MyId(dependentSetEnd.EntitySet.GetSchemaName());
+    
+#>
+    ALTER TABLE "<#=dependentTableUser#>"."<#=dependentTableName#>" DROP CONSTRAINT "<#=constraintName#>";
+<#
+    }
+#>
+
+-- --------------------------------------------------
+-- Dropping existing tables
+-- --------------------------------------------------
+<#
+    foreach (EntitySet entitySet in FcSQLExistingStore.GetAllEntitySets())
+    { 
+        string tableName = MyId(entitySet.GetTableName());
+		string tableUser = MyId(entitySet.GetSchemaName());
+#>
+    IF EXIST (SELECT tbl FROM admin.systables WHERE owner ='<#=Lit(tableUser)#>' AND tbl ='<#=Lit(tableName)#>') 
+      BEGIN
+        DROP TABLE "<#=tableUser#>"."<#=tableName#>";
+      END
+<#
+    }
+#>
+
+-- --------------------------------------------------
+-- Creating all tables
+-- --------------------------------------------------
+<#
+    EnvDTE.DTE env = (EnvDTE.DTE)((IServiceProvider)this.Host).GetService(typeof(EnvDTE.DTE));      
+    string serverVersion = GetProviderManifestToken(edmxPath);
+    string connection = String.Empty;
+    bool getConnection = false;
+    
+    if (String.IsNullOrEmpty(serverVersion))  getConnection = true; 	
+    try
+    {
+      if (!String.IsNullOrEmpty(serverVersion))
+      {
+        var tryVersion = new Version(serverVersion);       
+      }
+    }
+    catch
+    {
+      serverVersion =  "11.0";
+      getConnection= true;
+    }
+	
+    if (getConnection)
+    {
+        //EnvDTE.Project curProject = (EnvDTE.Project)((Array)env.ActiveSolutionProjects).GetValue(0);
+        EnvDTE.Project curProject = env.ActiveDocument.ProjectItem.ContainingProject;
+        connection = GetConnectionString(edmxPath, curProject);
+        connection = !String.IsNullOrEmpty(connection) ? connection.Substring(connection.IndexOf(";provider connection string=", StringComparison.OrdinalIgnoreCase) + ";provider connection string=".Length): connection;
+    }
+
+    foreach (EntitySet entitySet in FcSQLStore.GetAllEntitySets())
+    {
+        string tableName = MyId(entitySet.GetTableName());		
+        string tableScript = service.GetTableCreateScript(entitySet, connection, serverVersion);
+#>
+<#=tableScript#>
+<#
+    }
+#>
+-- --------------------------------------------------
+-- Creating all FOREIGN KEY constraints
+-- --------------------------------------------------
+
+<#
+    foreach (AssociationSet associationSet in FcSQLStore.GetAllAssociationSets())
+    {
+        ReferentialConstraint constraint = associationSet.ElementType.ReferentialConstraints.Single();
+        AssociationSetEnd dependentSetEnd = associationSet.AssociationSetEnds.Where(ase => ase.CorrespondingAssociationEndMember == constraint.ToRole).Single();
+        AssociationSetEnd principalSetEnd = associationSet.AssociationSetEnds.Where(ase => ase.CorrespondingAssociationEndMember == constraint.FromRole).Single();
+        string dependentTableName = MyId(dependentSetEnd.EntitySet.GetTableName());
+		string dependentTableUser =MyId(dependentSetEnd.EntitySet.GetSchemaName());
+        string principalTableName = MyId(principalSetEnd.EntitySet.GetTableName());
+		string principalTableUser =MyId(principalSetEnd.EntitySet.GetSchemaName());
+#>
+-- Creating foreign key on <#=WriteFcSqlColumns(constraint.ToProperties, ',')#> in table '<#=dependentTableName#>'
+
+ALTER TABLE "<#=dependentTableUser#>"."<#=dependentTableName#>"
+ADD CONSTRAINT "<#=WriteFcFKConstraintName(constraint)#>"
+    FOREIGN KEY (<#=WriteFcSqlColumns(constraint.ToProperties, ',')#>)
+    REFERENCES "<#=principalTableUser#>"."<#=principalTableName#>"
+        (<#=WriteFcSqlColumns(constraint.FromProperties, ',')#>);
+<#      
+        // if the foreign keys are part of the primary key on the dependent end, then we should not add a constraint.
+        if (!dependentSetEnd.EntitySet.ElementType.GetKeyProperties().Take(constraint.ToProperties.Count()).OrderBy(r => r.Name).SequenceEqual(constraint.ToProperties.OrderBy(r => r.Name)))
+        {
+#>
+
+-- Creating index for FOREIGN KEY '<#=WriteFcFKConstraintName(constraint)#>'
+
+CREATE INDEX "<#=dependentTableUser#>"."IX_<#=WriteFcFKConstraintName(constraint)#>"
+    ON "<#=dependentTableUser#>"."<#=dependentTableName#>"
+    (<#=WriteFcSqlColumns(constraint.ToProperties, ',')#>);
+<#      
+        }
+#>
+
+<#
+    }
+#>
+-- --------------------------------------------------
+-- Script has ended
+-- --------------------------------------------------

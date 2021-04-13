@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tutorial3", "Tutorial3.vbproj", "{A76CEF2E-66D8-450A-8F15-7B031EB8303A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A76CEF2E-66D8-450A-8F15-7B031EB8303A}.Debug|x64.ActiveCfg = Debug|x64
+		{A76CEF2E-66D8-450A-8F15-7B031EB8303A}.Debug|x64.Build.0 = Debug|x64
+		{A76CEF2E-66D8-450A-8F15-7B031EB8303A}.Release|x64.ActiveCfg = Release|x64
+		{A76CEF2E-66D8-450A-8F15-7B031EB8303A}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

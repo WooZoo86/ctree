@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpTutorials1", "Tutorial1\CSharpTutorials1.csproj", "{F016A9F0-D8CC-4D1A-9132-42113C4DD8B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpTutorials2", "Tutorial2\CSharpTutorials2.csproj", "{6B3937EE-570E-4397-9099-380001BC48C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpTutorials3", "Tutorial3\CSharpTutorials3.csproj", "{E192D4A0-2257-415A-A13C-3D83D0944FC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpTutorials4", "Tutorial4\CSharpTutorials4.csproj", "{9C4FB381-B672-457F-A792-281BE00388BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F016A9F0-D8CC-4D1A-9132-42113C4DD8B1}.Debug|x64.ActiveCfg = Debug|x64
+		{F016A9F0-D8CC-4D1A-9132-42113C4DD8B1}.Debug|x64.Build.0 = Debug|x64
+		{F016A9F0-D8CC-4D1A-9132-42113C4DD8B1}.Release|x64.ActiveCfg = Release|x64
+		{F016A9F0-D8CC-4D1A-9132-42113C4DD8B1}.Release|x64.Build.0 = Release|x64
+		{6B3937EE-570E-4397-9099-380001BC48C6}.Debug|x64.ActiveCfg = Debug|x64
+		{6B3937EE-570E-4397-9099-380001BC48C6}.Debug|x64.Build.0 = Debug|x64
+		{6B3937EE-570E-4397-9099-380001BC48C6}.Release|x64.ActiveCfg = Release|x64
+		{6B3937EE-570E-4397-9099-380001BC48C6}.Release|x64.Build.0 = Release|x64
+		{E192D4A0-2257-415A-A13C-3D83D0944FC5}.Debug|x64.ActiveCfg = Debug|x64
+		{E192D4A0-2257-415A-A13C-3D83D0944FC5}.Debug|x64.Build.0 = Debug|x64
+		{E192D4A0-2257-415A-A13C-3D83D0944FC5}.Release|x64.ActiveCfg = Release|x64
+		{E192D4A0-2257-415A-A13C-3D83D0944FC5}.Release|x64.Build.0 = Release|x64
+		{9C4FB381-B672-457F-A792-281BE00388BC}.Debug|x64.ActiveCfg = Debug|x64
+		{9C4FB381-B672-457F-A792-281BE00388BC}.Debug|x64.Build.0 = Debug|x64
+		{9C4FB381-B672-457F-A792-281BE00388BC}.Release|x64.ActiveCfg = Release|x64
+		{9C4FB381-B672-457F-A792-281BE00388BC}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,107 @@
+<script type="text/x-red" data-template-name="ctree_configuration">
+    <div class="form-row">
+        <label for="node-config-input-host"><i class="fa fa-globe"></i> Host</label>
+        <input type="text" id="node-config-input-host" placeholder="Database Server Name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-port"><i class="fa fa-globe"></i> Port</label>
+        <input type="text" id="node-config-input-port" placeholder="Database Server Port">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-ssl"><i class="fa fa-globe"></i> SSL</label>
+        <input type="checkbox" id="node-config-input-ssl" placeholder="Use SSL">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-user"><i class="fa fa-user"></i> User</label>
+        <input type="text" id="node-config-input-user" placeholder="Username">
+    </div>
+        <div class="form-row">
+        <label for="node-config-input-password"><i class="fa fa-lock"></i> Password</label>
+        <input type="password" id="node-config-input-password" placeholder="Password">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-db"><i class="fa fa-database"></i> Database</label>
+        <input type="text" id="node-config-input-db" placeholder="Database Name">
+    </div>
+</script>
+<script type="text/javascript">
+    RED.nodes.registerType('ctree_configuration', {
+        category: 'config',
+        defaults: {
+            host: {value:"127.0.0.1", required:true},
+            port: {value:8443, required:true},
+            ssl: {value:false, required:true},
+            db: {value:"", required:true}
+        },
+        credentials: {
+            user: {type: "text"},
+            password: {type: "password"}
+        },
+        label: function() {
+            if (this.name)
+                return this.name;
+            else if (this.db)
+                return this.db;
+            else
+                return "ctree";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ctree">
+    <div class="form-row">
+        <label for="node-input-mydb"><i class="fa fa-database"></i> Database</label>
+        <input type="text" id="node-input-mydb">
+    </div>
+    <div class="form-row">
+        <label for="node-input-action"><i class="fa fa-filter"></i> Action</label>
+        <select type="text" id="node-input-action" style="width:70%;">
+            <option value="create">Create</option>
+            <option value="read">Read</option>
+            <option value="update">Update</option>
+            <option value="delete">Delete</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-target"><i class="fa fa-filter"></i> Target</label>
+        <select type="text" id="node-input-target" style="width:70%;">
+            <option value="table">Table</option>
+            <option value="index">Index</option>
+            <option value="record">Record</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+<script type="text/x-red" data-help-name="ctree">
+    <p>Allows access to a ctree database.</p>
+    <p>This node uses the <b>query</b> operation against the configured database. This does allow both INSERTS and DELETES.
+    <p><b>msg.topic</b> must hold the table name, and the result is returned in <b>msg.payload</b>.</p>
+    <p><b>msg.payload</b> can contain an array of values to bind to the topic.</p>
+    <p>Typically the returned payload will be an array of the result rows.</p>
+    <p>If nothing is found for the key then <i>null</i> is returned,</p>
+</script>
+<script type="text/javascript">
+    RED.nodes.registerType('ctree', {
+        category: 'storage',
+        color:"#a6bbcf",
+        defaults: {
+            mydb: {type:"ctree_configuration", required:true},
+            action: {value:"create", required:true},
+            target: {value:"record", required:true},
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "db.png",
+        label: function() {
+            var levelNode = RED.nodes.node(this.mydb);
+            return this.name||(levelNode?levelNode.label():"ctree");
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SQLProcInfo procName="tutorial_2" nameSpace="Tutorials.Stored_Procedures" procUser="admin" procType="STP">
+  <Parameters />
+  <ResultSet>
+    <Column Name="name" Type="varchar(40)" />
+    <Column Name="Total" Type="money(8)" />
+  </ResultSet>
+</SQLProcInfo>

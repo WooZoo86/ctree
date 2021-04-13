@@ -1,0 +1,11 @@
+{
+  "name": "ctree",
+  "version": "0.1.0",
+  "description": "A c-tree client.",
+  "main": "index.js",
+  "author": "FairCom",
+  "license": "",
+  "dependencies": {
+    "request": "^2.75.0"
+  }
+}

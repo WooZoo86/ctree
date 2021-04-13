@@ -1,0 +1,59 @@
+// $Id: config.w32,v 1.2 2005/06/05 19:25:00 wez Exp $
+// vim:ft=javascript
+
+ARG_WITH("pdo-ctsql", "ctreeSQL support", "no");
+
+// PHP_PDO_CTSQL should be ctreeSDK\ctreeAPI
+
+if (PHP_PDO_CTSQL != "no") {
+//Check Trunk Directory Structure
+	if (CHECK_LIB("ctsqlapi.lib", "pdo_ctsql", PHP_PDO_CTSQL + "\\lib.pql") &&
+		CHECK_HEADER_ADD_INCLUDE("ctsqlapi.h", "CFLAGS_PDO_CTSQL", PHP_PDO_CTSQL + "\\ctree\\include", null, null, true))
+	{
+		EXTENSION('pdo_ctsql', 'pdo_ctsql.c ctsql_driver.c ctsql_statement.c');
+		AC_DEFINE('HAVE_CTREESQL', 1, 'Have ctreeSQL library');
+	} else {
+//Check Pro-Express Directory Structure
+		if (CHECK_LIB("ctsqlapi.lib", "pdo_ctsql", PHP_PDO_CTSQL + "\\lib\\c.sql.direct") &&
+			CHECK_HEADER_ADD_INCLUDE("ctsqlapi.h", "CFLAGS_PDO_CTSQL", PHP_PDO_CTSQL + "\\include", null, null, true))
+		{
+			EXTENSION('pdo_ctsql', 'pdo_ctsql.c ctsql_driver.c ctsql_statement.c');
+			AC_DEFINE('HAVE_CTREESQL', 1, 'Have ctreeSQL library');
+		} else {
+//Check RTG Directory Structure
+//			if (CHECK_LIB("ctsqlapi.lib", "pdo_ctsql",  PHP_PDO_CTSQL + "\\drivers\\php.sql.pdo\\src\\c.sql.direct\\lib") &&
+//				CHECK_HEADER_ADD_INCLUDE("ctsqlapi.h", "CFLAGS_PDO_CTSQL", PHP_PDO_CTSQL + "\\drivers\\php.sql.pdo\\src\\c.sql.direct\\include", null, null, true))
+//			{
+//				EXTENSION('pdo_ctsql', 'pdo_ctsql.c ctsql_driver.c ctsql_statement.c');
+//				AC_DEFINE('HAVE_CTREESQL', 1, 'Have ctreeSQL library');
+//			} else {
+//Check RTG/Edge new SDK/drivers Directory Structure
+				if (CHECK_LIB("ctsqlapi.lib", "pdo_ctsql",  PHP_PDO_CTSQL +"\\drivers\\ctree.drivers\\lib") &&
+				CHECK_HEADER_ADD_INCLUDE("ctsqlapi.h", "CFLAGS_PDO_CTSQL", PHP_PDO_CTSQL + "\\drivers\\ctree.drivers\\include",null, null, true))
+				{
+					EXTENSION('pdo_ctsql', 'pdo_ctsql.c ctsql_driver.c ctsql_statement.c');
+					AC_DEFINE('HAVE_CTREESQL', 1, 'Have ctreeSQL library');
+				} else {				
+//Check Current Directory
+			if (CHECK_LIB("ctsqlapi.lib", "pdo_ctsql", "c.sql.direct\\lib") &&
+				CHECK_HEADER_ADD_INCLUDE("ctsqlapi.h", "CFLAGS_PDO_CTSQL", "c.sql.direct\\include", null, null, true))
+			{
+				EXTENSION('pdo_ctsql', 'pdo_ctsql.c ctsql_driver.c ctsql_statement.c');
+				AC_DEFINE('HAVE_CTREESQL', 1, 'Have ctreeSQL library');
+			} else {
+				WARNING("ctreesql not enabled; libraries and headers not found");
+			}
+		}
+//	}
+	}
+	}
+
+	ADD_FLAG("LDFLAGS_CTSQL", "/nodefaultlib:libcmt");
+
+	if (X64) {
+	// 64 bit compilation
+		ADD_FLAG('CFLAGS_CTSQL','/D DH_64BIT_MODEL');
+	} 
+
+	ADD_EXTENSION_DEP('pdo_ctsql', 'pdo');
+}

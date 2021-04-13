@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SQLProcInfo procName="tutorial_1" nameSpace="Tutorials.Stored_Procedures" procUser="admin" procType="STP">
+  <Parameters />
+  <ResultSet>
+    <Column Name="custnumb" Type="varchar(4)" />
+    <Column Name="custname" Type="varchar(47)" />
+  </ResultSet>
+</SQLProcInfo>

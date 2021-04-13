@@ -1,0 +1,95 @@
+<script type="text/x-red" data-template-name="ctreeSQL_connection">
+    <div class="form-row">
+        <label for="node-config-input-host"><i class="fa fa-globe"></i> Host</label>
+        <input type="text" id="node-config-input-host" placeholder="Database Server Name">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-port"><i class="fa fa-globe"></i> Port</label>
+        <input type="text" id="node-config-input-port" placeholder="Database Server Port">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-user"><i class="fa fa-user"></i> User</label>
+        <input type="text" id="node-config-input-user" placeholder="Username">
+    </div>
+        <div class="form-row">
+        <label for="node-config-input-password"><i class="fa fa-lock"></i> Password</label>
+        <input type="password" id="node-config-input-password" placeholder="Password">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-db"><i class="fa fa-database"></i> Database</label>
+        <input type="text" id="node-config-input-db" placeholder="Database Name">
+    </div>
+</script>
+<script type="text/javascript">
+    RED.nodes.registerType('ctreeSQL_connection',{
+        category: 'config',
+        defaults: {
+            host: {value:"127.0.0.1",required:true},
+            port: {value:6597, required:false},
+            db: {value:"",required:true}
+        },
+        credentials: {
+            user: {type: "text"},
+            password: {type: "password"}
+        },
+        label: function() {
+            if (this.name)
+                return this.name;
+            else if (this.db)
+                return this.db;
+            else
+                return "ctreeSQL";
+        }
+    });
+</script>
+<script type="text/x-red" data-template-name="ctreeSQL">
+    <div class="form-row">
+        <label for="node-input-mydb"><i class="fa fa-database"></i> Database</label>
+        <input type="text" id="node-input-mydb">
+    </div>
+    <div class="form-row">
+        <label for="node-input-querytype"><i class="fa fa-filter"></i> Query Type</label>
+        <select type="text" id="node-input-querytype" style="width:70%;">
+            <option value="select">Select</option>
+            <option value="Insert">Insert</option>
+            <option value="update">Update</option>
+            <option value="delete">Delete</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+<script type="text/x-red" data-help-name="ctreeSQL">
+    <p>Allows access to a c-treeSQL database.</p>
+    <p>This node uses the <b>query</b> operation against the configured database. This does allow both INSERTS and DELETES.
+    By it's very nature it allows SQL injection... so <i>be careful.</i></p>
+    <p><b>msg.topic</b> must hold the <i>query</i> for the database, and the result is returned in <b>msg.payload</b>.</p>
+    <p><b>msg.payload</b> can contain an array of values to bind to the topic.</p>
+    <p>Typically the returned payload will be an array of the result rows.</p>
+    <p>If nothing is found for the key then <i>null</i> is returned,</p>
+    <p>The reconnect timeout in milliseconds can be changed by adding a line to <b>settings.js</b>
+    <pre>ctreeReconnectTime: 30000,</pre></p>
+</script>
+<script type="text/javascript">
+    RED.nodes.registerType('ctreeSQL',{
+        category: 'storage-input',
+        color:"#e97b00",
+        defaults: {
+            mydb: {type:"ctreeSQL_connection",required:true},
+            querytype: {value:"select", required:true},
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "db.png",
+        label: function() {
+            var levelNode = RED.nodes.node(this.mydb);
+            return this.name||(levelNode?levelNode.label():"ctreeSQL");
+        },
+        labelStyle: function() {
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>

@@ -1,0 +1,28 @@
+#!/bin/sh
+# uses pdo_ctsql.so driver installed on system
+# need to add lib
+# PDO_CTSQL_TEST_DSN is used for the redirected "core" tests in tests_common
+# But the environment is somehow empty when running the ctree specific tests (directory tests)
+
+CTPORT=6598
+CTHOST=localhost
+CTDB=ctreeSQL
+CTSQLAPI_PATH=../../../lib.pql
+PHPRC=`pwd`/php.ini; export PHPRC
+TEST_PHP_EXECUTABLE=/usr/local/bin/php;export TEST_PHP_EXECUTABLE
+#LD_LIBRARY_PATH=${CTSQLAPI_PATH};export LD_LIBRARY_PATH
+BASIC_SSL_DSN=ctsql:port=${CTPORT}\;host=${CTHOST}\;dbname=${CTDB}\;ssl=BASIC
+CERT_SSL_DSN=ctsql:port=${CTPORT}\;host=${CTHOST}\;dbname=${CTDB}\;ssl=ctree_ssl.pem
+BAD_SSL_DSN=ctsql:port=${CTPORT}\;host=${CTHOST}\;dbname=${CTDB}\;ssl=wrongcert.pem
+DEFAULT_DSN=ctsql:port=${CTPORT}\;host=${CTHOST}\;dbname=${CTDB}
+
+PDO_CTSQL_TEST_DSN=${DEFAULT_DSN};export PDO_CTSQL_TEST_DSN
+#PDO_CTSQL_TEST_DSN=${BASIC_SSL_DSN};export PDO_CTSQL_TEST_DSN
+#PDO_CTSQL_TEST_DSN=${BAD_SSL_DSN};export PDO_CTSQL_TEST_DSN
+PDO_CTSQL_TEST_USER=admin;export PDO_CTSQL_TEST_USER
+PDO_CTSQL_TEST_PASS=ADMIN;export PDO_CTSQL_TEST_PASS
+
+
+PDOTEST_DSN=$PDO_CTSQL_TEST_DSN;export PDOTEST_DSN
+PDOTEST_USER=$PDO_CTSQL_TEST_USER;export PDOTEST_USER
+PDOTEST_PASS=$PDO_CTSQL_TEST_PASS;export PDOTEST_PASS

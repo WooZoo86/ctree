@@ -1,0 +1,31 @@
+<script type="text/javascript">
+    RED.nodes.registerType('ctree-control',{
+        category: 'storage',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""},
+            path: {value:"", required:true}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "db.png",
+        label: function() {
+            return this.name||"ctree-control";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="ctree-control">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-path"><i class="fa fa-database"></i>Path to ctreesql binary</label>
+        <input type="text" id="node-input-path">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="ctree-control">
+    <p>Start and Stop your ctreeSQL server</p>
+</script>
